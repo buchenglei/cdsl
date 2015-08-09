@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
+#include "stack_array.h"
 
 int IsEmpty(Stack S)
 {
