@@ -20,6 +20,12 @@ void main()
 	printf("后序遍历：");
 	PrintTree(T, 0);
 	printf("\n");
+	printf("中序遍历：");
+	PrintTree(T, 1);
+	printf("\n");
+	printf("前序遍历：");
+	PrintTree(T, 2);
+	printf("\n");
 
 	// 查看插入的节点是否正确
 	Position TmpCell;
@@ -199,11 +205,23 @@ void PrintTree(SearchTree T, int method)
 			break;
 		// 中序遍历
 		case 1 :
+			if(T->Left != NULL)
+				PrintTree(T->Left, 1);
 
+			printf("%d  ", T->Element);
+			
+			if(T->Right != NULL)
+				PrintTree(T->Right, 1);
 			break;
 		// 前序遍历
 		case 2 :
-			
+			printf("%d  ", T->Element);
+
+			if(T->Left != NULL)
+				PrintTree(T->Left, 2);
+
+			if(T->Right != NULL)
+				PrintTree(T->Right, 2);
 			break;
 		default:
 			printf("未知的排序方式！！！\n");
