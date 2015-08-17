@@ -1,5 +1,7 @@
 /*
  * 带有平衡条件的二叉查找树
+ * 测试使用的数据来自书上
+ * 单旋转和双旋转都涉及到了
  * ps: 
  * 之前的代码风格一直都是按照书上来的
  * 但是，慢慢的发现自己很不喜欢，我也用其他编程语言
@@ -11,14 +13,27 @@
 
 void main() {
     AvlTree T = NULL;
-    T = Insert(20, T);
+    printf("数据插入的顺序为：\n");
+    printf("3,2,1,4,5,6,7,16,15,14,13,12,11,10,8,9\n");
+    T = Insert(3, T);
+    T = Insert(2, T);
+    T = Insert(1, T);
+    T = Insert(4, T);
+    T = Insert(5, T);
+    T = Insert(6, T);
+    T = Insert(7, T);
+    T = Insert(16, T);
     T = Insert(15, T);
-    T = Insert(21, T);
     T = Insert(14, T);
-    T = Insert(18, T);
-    T = Insert(17, T);
-    //T = Insert(19, T);
+    T = Insert(13, T);
+    T = Insert(12, T);
+    T = Insert(11, T);
+    T = Insert(10, T);
+    T = Insert(8, T);
+    T = Insert(9, T);
     
+    
+    printf("后序遍历输出树：\n");
     PrintTree(T);
     printf("\n");
 }
@@ -56,9 +71,9 @@ AvlTree Insert(ElementType X, AvlTree T) {
         // 插入过程结束后执行旋转函数
         if(Height(T->Right) - Height(T->Left) == 2)
             if(X > T->Right->Element)
-                T = SingleRotateWithLeft(T);
+                T = SingleRotateWithRight(T);
             else
-                T = DoubleRotateWithLeft(T);
+                T = DoubleRotateWithRight(T);
     }
     // 以上结果都不满足，则X已经是树中的节点，什么也不做
     T->Height = MAX(Height(T->Left), Height(T->Right)) + 1;
@@ -73,17 +88,37 @@ Position SingleRotateWithLeft(Position K2) {
     K1->Right = K2;
     
     K2->Height = MAX(Height(K2->Left), Height(K2->Right)) + 1;
-    K1->Height = MAX(Height(K1->Left), Height(K2->Right)) + 1;
+    K1->Height = MAX(Height(K1->Left), K2->Height) + 1;
 
     // 返回转换后的节点
     // 这是一个新的root
     return K1;
 }
 
+Position SingleRotateWithRight(Position K2) {
+    Position K1;
+    
+    K1 = K2->Right;
+    K2->Right = K1->Left;
+    K1->Left = K2;
+    
+    K2->Height = MAX(Height(K2->Left), Height(K2->Right)) + 1;
+    K1->Height = MAX(Height(K1->Right), K2->Height) + 1;
+    
+    return K1;
+     
+}
+
 Position DoubleRotateWithLeft(Position K3) {
-    K3->Left = SingleRotateWithLeft(K3->Left);
+    K3->Left = SingleRotateWithRight(K3->Left);
     
     return SingleRotateWithLeft(K3);
+}
+
+Position DoubleRotateWithRight(Position K3) {
+    K3->Right = SingleRotateWithLeft(K3->Right);
+    
+    return SingleRotateWithRight(K3);
 }
 
 // 后序遍历输出树

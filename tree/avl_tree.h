@@ -16,10 +16,14 @@ AvlTree Insert(ElementType X, AvlTree T);
 AvlTree Delete(ElementType X, AvlTree T);
 // 取回的dui'ying的对应的节点的值
 ElementType Retrieve(Position P);
-// 单旋转
+// 单旋转 - 左子树
 Position SingleRotateWithLeft(Position K2);
-// 双旋转
+// 单旋转 - 右子树
+Position SingleRotateWithRight(Position K2);
+// 双旋转 - 左子树
 Position DoubleRotateWithLeft(Position K3);
+// 双旋转 - 右子树
+Position DoubleRotateWithRight(Position K3);
 
 void PrintTree(AvlTree T);
 #endif
