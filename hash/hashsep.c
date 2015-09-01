@@ -14,10 +14,23 @@ Index Hash(const char *Key, int TableSize) {
 
 void main() {
     HashTable H = InitTable(7);
+    MakeEmpty(H);
     Insert("aaa", H);
     Insert("BBB", H);
+    //Delete("aaa", H);
     Position P = Find("aaa", H);
-    printf("Finded Element is %s\n ", P->Element);
+    if(P == NULL)
+        printf("Not found Key!\n");
+    else
+        printf("Finded Element is %s\n", P->Element);
+    
+    //MakeEmpty(H);
+    P = Find("BBB", H);
+    if(P == NULL)
+        printf("Not found Key!\n");
+    else
+        printf("Finded Element is %s\n ", P->Element);
+    
 }
 
 Position Find(ElementType Key, HashTable H) {
@@ -92,4 +105,38 @@ void Insert(ElementType Key, HashTable H) {
 // TODO 待完善！
 int NextPrime(int TableSize) {
     return TableSize;
+}
+
+void Delete(ElementType Key, HashTable H) {
+    Position P, D;
+    List L;
+    
+    L = H->TheLists[Hash(Key, H->TableSize)];
+    P = L;
+    while(P->Next != NULL && P->Next->Element != Key)
+        P = P->Next;
+    // P是指向待删除的关键字的前一个节点
+    if(P != NULL) {
+        D = P->Next;
+        P->Next = D->Next;
+        free(D);
+    }
+}
+
+
+void MakeEmpty(HashTable H) {
+    int i;
+    Position P;
+    List L;
+    
+    for(i = 0; i < H->TableSize; i++) {
+        L = H->TheLists[i]->Next;
+        while(L != NULL) {
+            P = L;
+            L = L->Next;
+            free(P);
+        }
+        free(L);
+        free(H->TheLists[i]);
+    }
 }
