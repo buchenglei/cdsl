@@ -6,10 +6,11 @@
 #include "binqueue.h"
 
 void main() {
+   BinQueue H = InitCollection(10);
     
 }
 
-BinQueue InitCollection() {
+BinQueue InitCollection(int size) {
  
     BinQueue H = (BinQueue)malloc(sizeof(struct Collection));
     
@@ -17,6 +18,15 @@ BinQueue InitCollection() {
         printf("Out of space!");
         return NULL;
     }
+    
+    // TODO 暂时还不能理解这玩意是干嘛用的
+    H->CurrentSize = size;
+    /*H->TheTrees = (BinTree *[MaxTrees])malloc(sizeof(struct BinNode) * MaxTrees);
+    if(H->TheTrees == NULL) {
+        printf("Out of space!");
+        free(H);
+        H = NULL;
+    }*/
     
     return H;
     
@@ -106,5 +116,53 @@ BinQueue Merge(BinQueue H1, BinQueue H2) {
                 break;
         }
     }
+    
+}
+
+ElementType DeleteMin(BinQueue H) {
+    
+    int i, j;
+    int MinTree;
+    BinQueue DeletedQueue;
+    Position DeletedTree, OldRoot;
+    ElementType MinItem;
+    
+    if(H->CurrentSize == 0) {
+        printf("Empty binomial queue");
+        return -Infinity;
+    }
+    
+    MinItem = Infinity;
+    // 寻找集合中根节点最小的二项树
+    for(i = 0; i < MaxTrees; i++) {
+        if(H->TheTrees[i] &&
+                H->TheTrees[i]->Element < MinItem) {
+            MinItem = H->TheTrees[i]->Element;
+            MinTree = i;
+        }
+    }
+    
+    // 取出待删除的二项树
+    DeletedTree = H->TheTrees[MinTree];
+    OldRoot = DeletedTree;
+    DeletedTree = DeletedTree->LeftChild;
+    free(OldRoot);
+    // TODO 这里CurrentSize的大小还没弄懂
+    DeletedQueue = InitCollection((1 << MinTree) - 1);
+    // 删除根节点以后，要将根节点LeftChild的中NextSibling全部拆开 
+    for(j = MinTree - 1; j >= 0; j--) {
+        DeletedQueue->TheTrees[j] = DeletedTree;
+        DeletedTree = DeletedTree->NextSibling;
+        DeletedQueue->TheTrees[j]->NextSibling = NULL;
+    }
+    // 将原来二项队列中包含最小根元素的二项树删除
+    // 因为已经将其拆散后保存在新的空二项队列中了
+    H->TheTrees[MinTree] = NULL;
+    H->CurrentSize -= DeletedQueue->CurrentSize + 1;
+    
+    // 这里合并的是两个二项队列
+    Merge(H, DeletedQueue);
+    
+    return MinItem;
     
 }
