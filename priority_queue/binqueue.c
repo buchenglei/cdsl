@@ -6,7 +6,11 @@
 #include "binqueue.h"
 
 void main() {
-   BinQueue H = InitCollection(10);
+   BinQueue H = InitCollection(3);
+   H = Insert(13, H);
+   // TODO 执行到这一句的时候Segment Fault
+   printf("testing... %d\n", H->CurrentSize);
+   PrintQueue(H);
     
 }
 
@@ -21,12 +25,11 @@ BinQueue InitCollection(int size) {
     
     // TODO 暂时还不能理解这玩意是干嘛用的
     H->CurrentSize = size;
-    /*H->TheTrees = (BinTree *[MaxTrees])malloc(sizeof(struct BinNode) * MaxTrees);
-    if(H->TheTrees == NULL) {
-        printf("Out of space!");
-        free(H);
-        H = NULL;
-    }*/
+    
+    int i;
+    for(i = 0; i< MaxTrees; i++) {
+        H->TheTrees[i]= NULL;
+    }
     
     return H;
     
@@ -164,5 +167,50 @@ ElementType DeleteMin(BinQueue H) {
     Merge(H, DeletedQueue);
     
     return MinItem;
+    
+}
+
+// 书上并没有提供该函数的例程，也许可以有更好的写法
+BinQueue Insert(ElementType X, BinQueue H1) {
+    
+    BinQueue H2 = InitCollection(1); 
+    BinTree T = InitBinNode(X);
+    
+    H2->TheTrees[MaxTrees - 1] = T;
+    // 二项队列的插入，可以理解为创建一个只包含一个
+    // 新节点的集合，然后将已存在的二项队列与之合并
+    return Merge(H1, H2);
+    
+}
+
+// 测试用的输出数组中的每个二项树
+void PrintTree(BinTree T) {
+    
+    if(T == NULL) {
+        return;
+    }
+    
+    printf("%d  ", T->Element);
+    PrintTree(T->NextSibling);
+    PrintTree(T->LeftChild);
+    
+}
+
+// 测试用的输出二项队列
+void PrintQueue(BinQueue H) {
+    
+    int i;
+    
+    if(H == NULL)
+        return;
+        
+    for(i = 0; i < MaxTrees; i++) {
+        if(H->TheTrees[i] == NULL) {
+            continue;
+        }
+        
+        printf("Find a BinTree at %d\n", i);
+        PrintTree(H->TheTrees[i]);
+    }
     
 }

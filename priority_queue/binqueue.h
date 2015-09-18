@@ -19,6 +19,7 @@ ElementType DeleteMin(BinQueue H);
 BinQueue InitCollection(int size);
 Position InitBinNode(ElementType X);
 BinQueue Insert(ElementType X, BinQueue H);
+void PrintQueue(BinQueue H);
 
 struct BinNode {
     ElementType Element;
