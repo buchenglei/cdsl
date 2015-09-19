@@ -7,9 +7,11 @@
 
 void main() {
    BinQueue H = InitCollection(3);
-   H = Insert(13, H);
+   H = Insert(12, H);
+   //H = Insert(24, H);
+   //H = Insert(21, H);
+   //H = Insert(65, H);
    // TODO 执行到这一句的时候Segment Fault
-   printf("testing... %d\n", H->CurrentSize);
    PrintQueue(H);
     
 }
@@ -81,7 +83,6 @@ BinQueue Merge(BinQueue H1, BinQueue H2) {
     }
     
     H1->CurrentSize += H2->CurrentSize;
-    
     for(i = 0, j = 1; j <= H1->CurrentSize; i++, j *= 2) {
         T1 = H1->TheTrees[i];
         T2 = H2->TheTrees[i];
@@ -102,6 +103,7 @@ BinQueue Merge(BinQueue H1, BinQueue H2) {
                 // 新的二项式的树高会 +1
                 // 这个新合并的二项树需要暂存起来，等待和下一个等高的二项树合并
                 Carry = CombineTree(T1, T2);
+                H1->TheTrees[i] = H2->TheTrees[i] = NULL;
                 Carry = NULL;
                 break;
             case 5: // H1 and Carry
@@ -119,6 +121,8 @@ BinQueue Merge(BinQueue H1, BinQueue H2) {
                 break;
         }
     }
+    
+    return H1;
     
 }
 
@@ -203,13 +207,12 @@ void PrintQueue(BinQueue H) {
     
     if(H == NULL)
         return;
-        
+    
     for(i = 0; i < MaxTrees; i++) {
         if(H->TheTrees[i] == NULL) {
             continue;
         }
         
-        printf("Find a BinTree at %d\n", i);
         PrintTree(H->TheTrees[i]);
     }
     
