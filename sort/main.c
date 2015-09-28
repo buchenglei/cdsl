@@ -66,12 +66,17 @@ void main() {
    
     newRandArray();
     
-    start();
     // 测试插入排序
+    start();
     InsertionSort(TestData, TEST_DATA_LEN);
     end("插入排序");
     //printArray();
     checkSort("插入排序");
     
+    // 测试希尔排序
+    start();
+    ShellSort(TestData, TEST_DATA_LEN);
+    end("希尔排序");
+    checkSort("希尔排序");
     
 }
