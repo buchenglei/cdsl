@@ -11,4 +11,7 @@ void InsertionSort(ElementType A[], int N);
 // 希尔排序
 void ShellSort(ElementType A[], int N);
 
+// 堆排序
+void HeapSort(ElementType A[], int N);
+
 #endif
