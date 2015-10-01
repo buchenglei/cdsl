@@ -4,8 +4,9 @@
 #include <time.h>
 #include "sort.h"
 
+#ifndef TEST_DATA_LEN
 #define TEST_DATA_LEN 100
-
+#endif
 // 用于保存测试数据的数组
 int TestData[TEST_DATA_LEN];
 // 用于测试的原始数据，保证多次测试的数据一致
@@ -84,5 +85,9 @@ void main() {
     start();
     HeapSort(TestData, TEST_DATA_LEN);
     end("堆排序");
-    //printArray();
+    
+    // 归并排序
+    start();
+    MergeSort(TestData, TEST_DATA_LEN);
+    end("归并排序");
 }

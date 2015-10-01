@@ -14,4 +14,7 @@ void ShellSort(ElementType A[], int N);
 // 堆排序
 void HeapSort(ElementType A[], int N);
 
+// 归并排序
+void MergeSort(ElementType A[], int N);
+
 #endif
