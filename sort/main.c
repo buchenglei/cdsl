@@ -90,4 +90,9 @@ void main() {
     start();
     MergeSort(TestData, TEST_DATA_LEN);
     end("归并排序");
+    
+    // 快速排序
+    start();
+    QuickSort(TestData, TEST_DATA_LEN);
+    end("快速排序");
 }

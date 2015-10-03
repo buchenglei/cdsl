@@ -17,4 +17,7 @@ void HeapSort(ElementType A[], int N);
 // 归并排序
 void MergeSort(ElementType A[], int N);
 
+// 快速排序
+void QuickSort(ElementType A[], int N);
+
 #endif
