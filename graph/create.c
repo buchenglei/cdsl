@@ -4,6 +4,7 @@
 
 struct Vertex{
     int num;
+    int use;
     struct Vertex *next;
 };
 
@@ -36,6 +37,7 @@ Graph *G_create(int vertexNum) {
     // 创建定点数组
     for (i = 0; i < vertexNum + 1; i++) {
         G->v[i].num = -1;
+        G->v[i].use = 0; // 初始状态，该节点没有使用
         G->v[i].next = NULL;
     }
     return G;
@@ -65,8 +67,14 @@ void G_print(int num, Graph *G) {
     num += 1;
     for(i = 1; i < num; i++) {
         Vertex *v = &G->v[i];
-        printf("%d:\t", i);
+        printf("%d(", i);
+        if(v->use == 0)
+            printf("unuse):\t");
+        else
+            printf("used):");
+            
         while(v != NULL) {
+            // -1代表头结点，不作处理
             if(v->num != -1) {
                 printf("%d\t", v->num);
             }
@@ -78,3 +86,30 @@ void G_print(int num, Graph *G) {
     
 }
 
+// 计算节点的入度
+int G_indegree(int num, Graph *G) {
+    int i, indegree = 0;
+    Vertex *v;
+    
+    for(i = 1; i <= G->vertexNum; i++) {
+        v = &G->v[i];
+        if(v->use == 1) 
+            continue;
+            
+        while(v != NULL) {
+            if(v->num == num )
+                indegree++;
+            v = v->next;
+        }
+    }
+    
+    return indegree;
+}
+
+void G_setUsed(int num , Graph *G) {
+    G->v[num].use = 1;
+}
+
+int G_isused(int num, Graph *G) {
+    return G->v[num].use;
+}
