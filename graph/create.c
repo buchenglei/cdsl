@@ -1,21 +1,7 @@
 // 图的邻接表表示
 #include <stdlib.h>
 #include <stdio.h>
-
-struct Vertex{
-    int num;
-    int use;
-    struct Vertex *next;
-};
-
-
-struct Graph{
-    int vertexNum;
-    struct Vertex *v;
-};
-
-typedef struct Vertex Vertex;
-typedef struct Graph Graph;
+#include "create.h"
 
 Graph *G_create(int vertexNum) {
     int i;
@@ -111,5 +97,7 @@ void G_setUsed(int num , Graph *G) {
 }
 
 int G_isused(int num, Graph *G) {
+	// 0 - 未使用
+	// 1 - 已被使用
     return G->v[num].use;
 }

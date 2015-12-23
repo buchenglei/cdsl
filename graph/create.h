@@ -1,9 +1,21 @@
 #ifndef _CREATE_H
 #define _CREATE_H
-    struct Vertex;
-    struct Graph;
-    typedef struct Vertex Vertex;
-    typedef struct Graph Graph;
+
+    struct Vertex{
+		int num;
+		int use;
+		struct Vertex *next;
+	};
+
+
+	struct Graph{
+		int vertexNum;
+		struct Vertex *v;
+	};
+
+	typedef struct Vertex Vertex;
+	typedef struct Graph Graph;
+
     Graph *G_create(int vertexNum);
     void G_createEdge(int start, int end, Graph *G);
     void G_print(int num, Graph *G);
