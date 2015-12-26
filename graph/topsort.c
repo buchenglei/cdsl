@@ -12,18 +12,18 @@ typedef struct Graph Graph;
 void main() {
     Graph *G = G_create(VERTEXNUM);
     // 创建边与边的关系
-    G_createEdge(1, 2, G);
-    G_createEdge(1, 3, G);
-    G_createEdge(1, 4, G);
-    G_createEdge(2, 4, G);
-    G_createEdge(2, 5, G);
-    G_createEdge(3, 6, G);
-    G_createEdge(4, 3, G);
-    G_createEdge(4, 6, G);
-    G_createEdge(4, 7, G);
-    G_createEdge(5, 4, G);
-    G_createEdge(5, 7, G);
-    G_createEdge(7, 6, G);
+    G_createEdge(1, 2, 1, G);
+    G_createEdge(1, 3, 1, G);
+    G_createEdge(1, 4, 1, G);
+    G_createEdge(2, 4, 1, G);
+    G_createEdge(2, 5, 1, G);
+    G_createEdge(3, 6, 1, G);
+    G_createEdge(4, 3, 1, G);
+    G_createEdge(4, 6, 1, G);
+    G_createEdge(4, 7, 1, G);
+    G_createEdge(5, 4, 1, G);
+    G_createEdge(5, 7, 1, G);
+    G_createEdge(7, 6, 1, G);
     // 输出测试结果
     G_print(VERTEXNUM, G);
     

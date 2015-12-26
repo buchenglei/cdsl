@@ -62,18 +62,18 @@ void smallPath(int start, int end) {
 int main() {
 	Graph *G = G_create(VertexNum);
 	
-	G_createEdge(1, 2, G);
-	G_createEdge(1, 4, G);
-	G_createEdge(2, 4, G);
-	G_createEdge(2, 5, G);
-	G_createEdge(3, 1, G);
-	G_createEdge(3, 6, G);
-	G_createEdge(4, 3, G);
-	G_createEdge(4, 5, G);
-	G_createEdge(4, 6, G);
-	G_createEdge(4, 7, G);
-	G_createEdge(5, 7, G);
-	G_createEdge(7, 6, G);
+	G_createEdge(1, 2, 1, G);
+	G_createEdge(1, 4, 1, G);
+	G_createEdge(2, 4, 1, G);
+	G_createEdge(2, 5, 1, G);
+	G_createEdge(3, 1, 1, G);
+	G_createEdge(3, 6, 1, G);
+	G_createEdge(4, 3, 1, G);
+	G_createEdge(4, 5, 1, G);
+	G_createEdge(4, 6, 1, G);
+	G_createEdge(4, 7, 1, G);
+	G_createEdge(5, 7, 1, G);
+	G_createEdge(7, 6, 1, G);
 
 	int start = 2;
 	printf("The smallest path to V%d:\n", start);

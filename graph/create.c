@@ -24,12 +24,13 @@ Graph *G_create(int vertexNum) {
     for (i = 0; i < vertexNum + 1; i++) {
         G->v[i].num = -1;
         G->v[i].use = 0; // 初始状态，该节点没有使用
+        G->v[i].weight = 1; // 边的默认权值是1，也就是无权图
         G->v[i].next = NULL;
     }
     return G;
 }
 
-void G_createEdge(int start, int end, Graph *G) {
+void G_createEdge(int start, int end, int weight ,Graph *G) {
     Vertex *v, *p;
     v = &G->v[start];
     p = v;
@@ -44,6 +45,7 @@ void G_createEdge(int start, int end, Graph *G) {
         printf("Create edge error!");
     }
     p->next->num = end;
+    p->next->weight = weight;
     p->next->next = NULL;
 }
 
@@ -62,7 +64,7 @@ void G_print(int num, Graph *G) {
         while(v != NULL) {
             // -1代表头结点，不作处理
             if(v->num != -1) {
-                printf("%d\t", v->num);
+                printf("%d(%d)\t", v->num, v->weight);
             }
             v = v->next;
         }
@@ -100,4 +102,18 @@ int G_isused(int num, Graph *G) {
 	// 0 - 未使用
 	// 1 - 已被使用
     return G->v[num].use;
+}
+
+// 获取每条边的权值
+int G_getEdgeWeight(int from, int to, Graph *G) {
+	Vertex *v = &G->v[from];
+	Vertex *p = v->next;
+	
+	while(p != NULL) {
+		if(p->num == to) {
+			return p->weight;
+		} else {
+			p = p->next;
+		}
+	}
 }
